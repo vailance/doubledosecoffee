@@ -1,26 +1,98 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #FAFAF9;
+  --foreground: #0C0A09;
+  --accent: #A16207;
+  --accent-light: #D97706;
+  --muted: #78716C;
+  --border: #D6D3D1;
+  --surface: #F5F5F4;
 }
 
 body {
+  font-family: var(--font-inter), system-ui, sans-serif;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.hero-grain {
+  background-image:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.05), transparent 28%),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 26%),
+    radial-gradient(circle at 80% 10%, rgba(251, 191, 36, 0.08), transparent 22%);
+}
+
+.ambient-orb {
+  animation: driftOrb 18s ease-in-out infinite;
+  will-change: transform;
+}
+
+.ambient-orb-delay {
+  animation-delay: -5s;
+}
+
+.ambient-orb-slow {
+  animation-duration: 24s;
+}
+
+.editorial-panel {
+  background:
+    linear-gradient(145deg, rgba(120, 53, 15, 0.08), rgba(255, 255, 255, 0.92)),
+    radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), transparent 40%),
+    #ffffff;
+  box-shadow: 0 24px 80px rgba(12, 10, 9, 0.08);
+}
+
+.radial-warm-surface {
+  background:
+    radial-gradient(circle at top, rgba(251, 191, 36, 0.18), transparent 38%),
+    linear-gradient(180deg, #fffdf8 0%, #fafaf9 100%);
+}
+
+.card-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.26) 50%, transparent 75%);
+  opacity: 0;
+  transform: translateX(-35%);
+  transition: transform 0.7s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card-sheen:hover::after,
+.card-sheen:focus-visible::after {
+  opacity: 1;
+  transform: translateX(35%);
+}
+
+@keyframes driftOrb {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(18px, -24px, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb {
+    animation: none;
+  }
+
+  .card-sheen::after {
+    transition: none;
+  }
 }
